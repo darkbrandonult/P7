@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>Update Curve Point</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Update Curve Point</h2>
+    
+    <form action="#" th:action="@{/curvePoint/update/{id}(id=${curvePoint.id})}" th:object="${curvePoint}" method="post">
+        <input type="hidden" th:field="*{id}" />
+        
+        <div class="mb-3">
+            <label for="curveId" class="form-label">Curve ID <span class="text-danger">*</span></label>
+            <input type="number" th:field="*{curveId}" class="form-control" 
+                   th:classappend="${#fields.hasErrors('curveId')} ? 'is-invalid' : ''" 
+                   id="curveId" />
+            <div th:if="${#fields.hasErrors('curveId')}" class="invalid-feedback">
+                <span th:errors="*{curveId}"></span>
+            </div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="term" class="form-label">Term <span class="text-danger">*</span></label>
+            <input type="number" step="0.01" th:field="*{term}" class="form-control" 
+                   th:classappend="${#fields.hasErrors('term')} ? 'is-invalid' : ''" 
+                   id="term" />
+            <div th:if="${#fields.hasErrors('term')}" class="invalid-feedback">
+                <span th:errors="*{term}"></span>
+            </div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="value" class="form-label">Value <span class="text-danger">*</span></label>
+            <input type="number" step="0.01" th:field="*{value}" class="form-control" 
+                   th:classappend="${#fields.hasErrors('value')} ? 'is-invalid' : ''" 
+                   id="value" />
+            <div th:if="${#fields.hasErrors('value')}" class="invalid-feedback">
+                <span th:errors="*{value}"></span>
+            </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Update Curve Point</button>
+        <a href="/curvePoint/list" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+</body>
+</html>

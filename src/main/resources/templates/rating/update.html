@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>Update Rating</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Update Rating</h2>
+    
+    <form action="#" th:action="@{/rating/update/{id}(id=${rating.id})}" th:object="${rating}" method="post">
+        
+        <input type="hidden" th:field="*{id}" />
+        
+        <div class="mb-3">
+            <label for="moodysRating" class="form-label">Moody's Rating <span class="text-danger">*</span></label>
+            <input type="text" th:field="*{moodysRating}" class="form-control" 
+                   th:classappend="${#fields.hasErrors('moodysRating')} ? 'is-invalid' : ''" 
+                   id="moodysRating" />
+            <div th:if="${#fields.hasErrors('moodysRating')}" class="invalid-feedback">
+                <span th:errors="*{moodysRating}"></span>
+            </div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="sandPRating" class="form-label">S&P Rating <span class="text-danger">*</span></label>
+            <input type="text" th:field="*{sandPRating}" class="form-control" 
+                   th:classappend="${#fields.hasErrors('sandPRating')} ? 'is-invalid' : ''" 
+                   id="sandPRating" />
+            <div th:if="${#fields.hasErrors('sandPRating')}" class="invalid-feedback">
+                <span th:errors="*{sandPRating}"></span>
+            </div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="fitchRating" class="form-label">Fitch Rating <span class="text-danger">*</span></label>
+            <input type="text" th:field="*{fitchRating}" class="form-control" 
+                   th:classappend="${#fields.hasErrors('fitchRating')} ? 'is-invalid' : ''" 
+                   id="fitchRating" />
+            <div th:if="${#fields.hasErrors('fitchRating')}" class="invalid-feedback">
+                <span th:errors="*{fitchRating}"></span>
+            </div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="orderNumber" class="form-label">Order Number <span class="text-danger">*</span></label>
+            <input type="number" th:field="*{orderNumber}" class="form-control" 
+                   th:classappend="${#fields.hasErrors('orderNumber')} ? 'is-invalid' : ''" 
+                   id="orderNumber" />
+            <div th:if="${#fields.hasErrors('orderNumber')}" class="invalid-feedback">
+                <span th:errors="*{orderNumber}"></span>
+            </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Update Rating</button>
+        <a href="/rating/list" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+</body>
+</html>
