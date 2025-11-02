@@ -71,7 +71,7 @@ public class UserService implements GenericService<UserDTO> {
      * @return the user DTO if found
      */
     public Optional<UserDTO> findByUsername(String username) {
-        User user = userRepository.findByUsername(username);
-        return user != null ? Optional.of(userMapper.toDto(user)) : Optional.empty();
+        return userRepository.findByUsername(username)
+                .map(userMapper::toDto);
     }
 }
