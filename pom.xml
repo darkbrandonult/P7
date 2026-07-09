@@ -116,7 +116,18 @@
 					</excludes>
 				</configuration>
 			</plugin>
-			
+
+			<!-- Java 25: Spring Framework 6.2.x ASM does not recognise class file
+			     version 69 (Java 25). Instruct Spring's classpath scanner to skip
+			     class files it cannot parse rather than failing. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<argLine>-Dspring.classformat.ignore=true</argLine>
+				</configuration>
+			</plugin>
+
 			<!-- Build Helper to add generated sources -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
