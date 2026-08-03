@@ -50,7 +50,8 @@ public class SecurityConfig {
             )
             .formLogin(form -> form
                 .loginPage("/app/login")
-                .defaultSuccessUrl("/", true)
+                .defaultSuccessUrl("/home", true)
+                .failureUrl("/app/login?error=true")
                 .permitAll()
             )
             .logout(logout -> logout
@@ -59,7 +60,9 @@ public class SecurityConfig {
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .permitAll()
-            );
+            )
+            .exceptionHandling(exception -> exception
+                .accessDeniedPage("/403"));
         
         return http.build();
     }
