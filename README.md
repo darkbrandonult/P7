@@ -1,216 +1,168 @@
-# Poseidon Capital Solutions Trading Platform
+# Poseidon Capital Solutions
 
-## 🚀 Project Description
+A Spring Boot web application for managing trading operations. This platform centralizes the day-to-day records of a trading desk — bids, curve points, ratings, trades, and business rules — behind a secure, role-aware interface.
 
-Poseidon Capital Solutions Trading Platform is a robust web application for trading management, offering a comprehensive solution for managing bids, curve points, ratings, transactions, custom rules, and users.
+---
 
-## 🛠 Technologies Used
+## What's Inside
 
-- **Backend**:
-  - Java 21
-  - Spring Boot 3.4.13
-  - Spring Security
-  - Spring Data JPA
-  - MapStruct
-  - Lombok
+The application is built around six core business areas, each with full create, read, update, and delete flows:
 
-- **Frontend**:
-  - Thymeleaf
-  - Bootstrap 4
-  - HTML5
+| Area | Purpose |
+|------|---------|
+| **Bid Lists** | Track incoming and outgoing bids with account, type, and quantity details |
+| **Curve Points** | Record yield-curve data points (term and value) for analysis |
+| **Ratings** | Maintain Moody's, S&P, and Fitch ratings with ordering |
+| **Trades** | Log trade transactions with full counterparty and pricing information |
+| **Rule Names** | Store reusable business rules, templates, and SQL fragments |
+| **Users** | Manage platform accounts with ADMIN and USER roles |
 
-- **Database**:
-  - MySQL (production)
-  - H2 (tests)
+---
 
-- **Testing Tools**:
-  - JUnit 5
-  - Mockito
-  - Spring Test
+## Technology Stack
 
-- **API Documentation**:
-  - SpringDoc OpenAPI (Swagger)
+**Backend**
+- Java 21
+- Spring Boot 3.4.13
+- Spring Security
+- Spring Data JPA / Hibernate
+- MapStruct (bean mapping)
+- Lombok (boilerplate reduction)
 
-## 🏗️ Architecture Overview
+**Frontend**
+- Thymeleaf templates
+- Bootstrap 4
+- HTML5
 
-The application follows a monolithic architecture organized in layers according to the MVC (Model-View-Controller) pattern:
+**Data**
+- MySQL (production)
+- H2 (in-memory, for tests)
 
-### Architectural Layers
+**Quality & Docs**
+- JUnit 5 + Mockito
+- JaCoCo (coverage)
+- SpringDoc OpenAPI / Swagger
 
-1. **Presentation Layer**:
-   - Controllers handle HTTP requests
-   - Thymeleaf templates render the UI
-   - DTOs (Data Transfer Objects) for data exchange with client
+---
 
-2. **Service Layer**:
-   - Business logic implementation
-   - Transaction management
-   - Data validation and processing
+## How the Code Is Organized
 
-3. **Data Access Layer**:
-   - Spring Data JPA repositories
-   - Entity models representing database tables
-   - Data persistence operations
-
-4. **Cross-Cutting Concerns**:
-   - Security
-   - Exception handling
-   - Logging
-   - Configuration
-
-### Design Patterns Used
-
-- **DTO Pattern**: Separate data transfer objects from domain models
-- **Repository Pattern**: Abstract data access operations
-- **Dependency Injection**: Spring's IoC container manages component dependencies
-- **MVC Pattern**: Separation of concerns between Models, Views, and Controllers
-- **Mapper Pattern**: MapStruct for type-safe bean mapping between DTOs and entities
-
-## 🔐 Security Architecture
-
-The application implements a comprehensive security model using Spring Security:
-
-### Authentication
-
-- Form-based authentication with username and password
-- BCrypt password encoding for secure storage
-- Custom UserDetailsService implementation that loads user data from the database
-
-### Authorization
-
-- Role-based access control with distinct ADMIN and USER roles
-- Method-level security using `@EnableMethodSecurity`
-- URL-based security patterns in SecurityFilterChain configuration
-
-### Security Rules
-
-1. **ADMIN Role**:
-   - Full access to user management (`/user/**`)
-   - Full access to all features and operations (CRUD)
-
-2. **USER Role**:
-   - Access to all entity management pages (bids, curve points, ratings, trades, rules)
-
-3. **Security Configuration**:
-   - Custom security filter chain
-   - Login page at `/app/login`
-   - Protected endpoints except login, error, and static resources
-   - CSRF protection enabled
-   - Session management with logout and cookie deletion
-   - Custom 403 access-denied page
-
-## ✨ Key Features
-
-1. **User Management**
-   - Authentication and authorization
-   - User creation, modification, and deletion
-   - Strong password validation (8+ chars, uppercase, number, symbol)
-   - Different roles (ADMIN, USER)
-
-2. **Bid List Management**
-   - Bid creation and tracking
-   - Complete CRUD operations
-
-3. **Curve Points**
-   - Financial curve point management
-   - Data tracking and analysis
-
-4. **Ratings**
-   - Management of Moody's, S&P, and Fitch ratings
-   - Financial ranking tracking
-
-5. **Transactions**
-   - Trade recording and tracking
-   - Comprehensive trade details
-
-6. **Custom Rules**
-   - Business rule creation and management
-   - Flexibility for specific configurations
-
-## 📦 Project Structure
+The project follows a layered, MVC-style architecture. Each layer has a single responsibility and communicates only with the layer below it:
 
 ```
 src
 ├── main
-│   ├── java
-│   │   └── com/poseidoncapitalsolutions/poseidon
-│   │       ├── config           # Spring Configuration
-│   │       │   ├── SecurityConfig.java          # Security settings
-│   │       │   ├── SwaggerConfig.java           # API documentation
-│   │       │   ├── UserDetailsServiceImpl.java  # Authentication service
-│   │       │   └── UserDetailsImpl.java         # User details implementation
-│   │       ├── controller       # Spring MVC Controllers
-│   │       ├── dto              # Data Transfer Objects
-│   │       ├── exception        # Custom Exception Handling
-│   │       ├── mapper           # MapStruct Mappers
-│   │       ├── model            # JPA Entities
-│   │       ├── repository       # Spring Data Repositories
-│   │       └── service          # Business Services
+│   ├── java/com/poseidoncapitalsolutions/poseidon
+│   │   ├── config        → Security, Swagger, and user-details beans
+│   │   ├── controller    → HTTP endpoints and view routing
+│   │   ├── dto           → Validation-aware data transfer objects
+│   │   ├── exception     → Custom exceptions and global error handling
+│   │   ├── mapper        → MapStruct interfaces (DTO ↔ entity)
+│   │   ├── model         → JPA entities mirroring the database tables
+│   │   ├── repository    → Spring Data repositories
+│   │   └── service       → Business logic and transaction boundaries
 │   └── resources
-│       ├── static               # Static Resources (Bootstrap CSS)
-│       ├── templates            # Thymeleaf Templates
+│       ├── static        → Bootstrap CSS
+│       ├── templates     → Thymeleaf views (list / add / update per entity)
 │       └── application.properties
-└── test                         # Unit and Integration Tests
+└── test                  → Unit tests for services and controllers
 ```
 
-## 🚀 Installation and Configuration
+**Design choices worth noting:**
+- **DTOs** keep the web layer decoupled from the persistence model.
+- **MapStruct** generates the mapping code at compile time, so there's no hand-written boilerplate.
+- **Repositories** abstract all data access, keeping services focused on business rules.
+- **Dependency injection** is constructor-based throughout, which makes the code easy to test.
+
+---
+
+## Security Model
+
+Access control is handled by Spring Security with a custom `UserDetailsService` that loads accounts from the database.
+
+**Authentication**
+- Form-based login at `/app/login`
+- Passwords hashed with BCrypt before storage
+- Session-based with logout that invalidates the session and clears cookies
+
+**Authorization**
+- Two roles: `ADMIN` and `USER`
+- `/user/**` endpoints are restricted to `ADMIN`
+- All other pages require an authenticated session
+- Login, error pages, and static assets are public
+- A custom 403 page is shown when access is denied
+
+**Password policy**
+New user passwords must be at least 8 characters and include an uppercase letter, a number, and a symbol — enforced by validation on the `UserDTO`.
+
+---
+
+## Getting Started
 
 ### Prerequisites
-- Java 21
-- Maven
-- MySQL
 
-### Installation Steps
+- JDK 21
+- Maven 3.8+
+- MySQL server
 
-1. Clone the repository
-```bash
-git clone https://github.com/darkbrandonult/P7.git
-cd P7
-```
+### Setup
 
-2. Configure the Database
-- Create a MySQL database named `demo` (or update `application.properties`)
-- The default configuration expects `root` / `root` credentials
-- Initialize the schema using the SQL script in `doc/data.sql`
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/darkbrandonult/P7.git
+   cd P7
+   ```
 
-3. Compile and Run the Application
-```bash
-mvn clean install
-mvn spring-boot:run
-```
+2. **Prepare the database**
+   - Create a MySQL database named `demo`
+   - The default connection expects username `root` and password `root` (adjust in `src/main/resources/application.properties` if yours differ)
+   - Load the schema and seed data from `doc/data.sql`
 
-4. Access the application at `http://localhost:8080`
+3. **Build and run**
+   ```bash
+   mvn clean install
+   mvn spring-boot:run
+   ```
 
-## 🧪 Testing
+4. **Open the app**
+   Visit `http://localhost:8080` — you'll be redirected to the login page.
 
-- Unit and integration testing with JUnit 5 and Mockito
-- H2 in-memory database for isolated test runs
-- Test coverage managed by JaCoCo
-- Run tests:
+---
+
+## Running the Tests
+
+The test suite uses an in-memory H2 database, so no external setup is required:
+
 ```bash
 mvn test
 ```
 
-## 📊 API Documentation
+Coverage reports are generated by JaCoCo into `target/site/jacoco`.
 
-- Swagger UI accessible at: `/swagger-ui.html`
-- OpenAPI documentation at: `/api-docs`
+---
 
-## 🔒 Default Credentials
+## API Documentation
 
-- **Admin**:
-  - Username: admin
-  - Password: 123123
+Once the app is running, interactive API docs are available through Swagger:
 
-- **Standard User**:
-  - Username: user
-  - Password: 123123
+- Swagger UI: `http://localhost:8080/swagger-ui.html`
+- OpenAPI JSON: `http://localhost:8080/api-docs`
 
-## 🌟 Best Practices
+---
 
-- **Clean Code**: Following SOLID principles and clean code practices
-- **Security**: Implementing defense in depth with multiple security layers
-- **Testing**: Comprehensive unit and integration tests
-- **Documentation**: Well-documented code with JavaDoc
-- **DTO Pattern**: Separation of entity models from data transfer objects
-- **Validation**: Input validation at multiple levels
+## Default Accounts
+
+| Role  | Username | Password |
+|-------|----------|----------|
+| Admin | `admin`  | `123123` |
+| User  | `user`   | `123123` |
+
+---
+
+## Notes on Quality
+
+- **SOLID principles** guide the class design; each class has a clear, narrow purpose.
+- **Defense in depth** — security is enforced at both the URL level and the method level.
+- **Testable by design** — services and controllers are covered by unit tests using mocks.
+- **Validation** happens at the DTO boundary, so bad input is caught early.
+- **Documented** — key classes carry Javadoc explaining their role.
