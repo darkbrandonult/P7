@@ -49,11 +49,11 @@ public class TradeController {
     @PostMapping("/update/{id}")
     public String updateTrade(@PathVariable("id") Integer id, @Valid TradeDTO trade,
                               BindingResult result, Model model) {
+        trade.setTradeId(id);
         if (result.hasErrors()) {
-            trade.setTradeId(id);
+            model.addAttribute("trade", trade);
             return "trade/update";
         }
-        trade.setTradeId(id);
         tradeService.save(trade);
         return "redirect:/trade/list";
     }
