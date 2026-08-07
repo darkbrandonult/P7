@@ -200,6 +200,12 @@
 						<goals>
 							<goal>report</goal>
 						</goals>
+						<configuration>
+							<!-- MapStruct impls are 100% generated boilerplate (unlike Lombok's, not auto-filtered by JaCoCo since @Generated has SOURCE retention) -->
+							<excludes>
+								<exclude>**/mapper/*MapperImpl.class</exclude>
+							</excludes>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
