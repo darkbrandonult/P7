@@ -10,7 +10,6 @@ import com.poseidoncapitalsolutions.poseidon.repository.UserRepository;
 
 
 @Controller
-//@RequestMapping("app")
 public class LoginController {
 
     private final UserRepository userRepository;
@@ -21,10 +20,10 @@ public class LoginController {
 
     @GetMapping("/")
     public String redirectToLogin() {
-        return "redirect:/login";
+        return "redirect:/app/login";
     }
 
-    @GetMapping("/login")
+    @GetMapping("/app/login")
     public ModelAndView login() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("login");
@@ -36,15 +35,6 @@ public class LoginController {
         ModelAndView mav = new ModelAndView();
         mav.addObject("users", userRepository.findAll());
         mav.setViewName("user/list");
-        return mav;
-    }
-
-    @GetMapping("/403")
-    public ModelAndView error() {
-        ModelAndView mav = new ModelAndView();
-        String errorMessage = "You are not authorized for the requested data.";
-        mav.addObject("errorMsg", errorMessage);
-        mav.setViewName("403");
         return mav;
     }
 }
