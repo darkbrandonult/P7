@@ -35,7 +35,7 @@ public class CurvePoint {
     private Double term;
     
     @NotNull(message = "Value is mandatory")
-    @Column(nullable = false)
+    @Column(name = "`value`", nullable = false)
     private Double value;
     
     @Column(name = "creationDate")
