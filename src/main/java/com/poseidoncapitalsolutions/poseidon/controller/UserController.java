@@ -49,11 +49,11 @@ public class UserController {
     @PostMapping("/update/{id}")
     public String updateUser(@PathVariable("id") Integer id, @Valid UserDTO user,
                              BindingResult result, Model model) {
+        user.setId(id);
         if (result.hasErrors()) {
-            user.setId(id);
+            model.addAttribute("user", user);
             return "user/update";
         }
-        user.setId(id);
         userService.save(user);
         return "redirect:/user/list";
     }

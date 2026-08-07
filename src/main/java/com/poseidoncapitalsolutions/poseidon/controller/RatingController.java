@@ -1,12 +1,17 @@
 package com.poseidoncapitalsolutions.poseidon.controller;
 
-import com.poseidoncapitalsolutions.poseidon.dto.RatingDTO;
-import com.poseidoncapitalsolutions.poseidon.service.RatingService;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.poseidoncapitalsolutions.poseidon.dto.RatingDTO;
+import com.poseidoncapitalsolutions.poseidon.service.RatingService;
+
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/rating")
@@ -64,11 +69,11 @@ public class RatingController {
     @PostMapping("/update/{id}")
     public String updateRating(@PathVariable("id") Integer id, @Valid RatingDTO rating,
                                BindingResult result, Model model) {
+        rating.setId(id);
         if (result.hasErrors()) {
-            rating.setId(id);
+            model.addAttribute("rating", rating);
             return "rating/update";
         }
-        rating.setId(id);
         ratingService.save(rating);
         return "redirect:/rating/list";
     }

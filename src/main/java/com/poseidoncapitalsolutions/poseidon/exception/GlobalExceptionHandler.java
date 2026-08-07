@@ -20,4 +20,12 @@ public class GlobalExceptionHandler {
         model.addAttribute("errorMsg", ex.getMessage());
         return "error/404";
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handleIllegalArgumentException(IllegalArgumentException ex, Model model) {
+        logger.error("Invalid argument: {}", ex.getMessage());
+        model.addAttribute("errorMsg", ex.getMessage());
+        return "error/404";
+    }
 }

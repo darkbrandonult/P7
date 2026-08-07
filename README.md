@@ -114,7 +114,7 @@ New user passwords must be at least 8 characters and include an uppercase letter
    ```
 
 2. **Prepare the database**
-   - Create a MySQL database named `demo`
+   - Create a MySQL database named `poseidon`
    - The default connection expects username `root` and password `root` (adjust in `src/main/resources/application.properties` if yours differ)
    - Load the schema and seed data from `doc/data.sql`
 

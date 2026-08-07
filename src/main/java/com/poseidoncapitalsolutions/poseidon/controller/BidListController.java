@@ -1,12 +1,17 @@
 package com.poseidoncapitalsolutions.poseidon.controller;
 
-import com.poseidoncapitalsolutions.poseidon.dto.BidListDTO;
-import com.poseidoncapitalsolutions.poseidon.service.BidListService;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.poseidoncapitalsolutions.poseidon.dto.BidListDTO;
+import com.poseidoncapitalsolutions.poseidon.service.BidListService;
+
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/bidList")
@@ -49,11 +54,11 @@ public class BidListController {
     @PostMapping("/update/{id}")
     public String updateBid(@PathVariable("id") Integer id, @Valid BidListDTO bid,
                             BindingResult result, Model model) {
+        bid.setBidListId(id);
         if (result.hasErrors()) {
-            bid.setBidListId(id);
+            model.addAttribute("bidList", bid);
             return "bidList/update";
         }
-        bid.setBidListId(id);
         bidListService.save(bid);
         return "redirect:/bidList/list";
     }

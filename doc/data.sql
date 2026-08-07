@@ -94,5 +94,6 @@ CREATE TABLE Users (
   PRIMARY KEY (Id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO Users(fullname, username, password, role) VALUES("Administrator", "admin", "$2a$10$pBV8ILO/s/nao4wVnGLrh.sa/rnr5pDpbeC4E.KNzQWoy8obFZdaa", "ADMIN");
-INSERT INTO Users(fullname, username, password, role) VALUES("User", "user", "$2a$10$pBV8ILO/s/nao4wVnGLrh.sa/rnr5pDpbeC4E.KNzQWoy8obFZdaa", "USER");
+-- password for both accounts is "123123" (matches README default accounts table)
+INSERT INTO Users(fullname, username, password, role) VALUES("Administrator", "admin", "$2a$10$7TIhbXZxtIkHaJL3A4N/ouf58dPxyP34piJT9d0NPzwmGjby9nNT2", "ADMIN");
+INSERT INTO Users(fullname, username, password, role) VALUES("User", "user", "$2a$10$7TIhbXZxtIkHaJL3A4N/ouf58dPxyP34piJT9d0NPzwmGjby9nNT2", "USER");
