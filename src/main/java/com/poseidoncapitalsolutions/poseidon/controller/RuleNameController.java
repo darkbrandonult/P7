@@ -1,12 +1,17 @@
 package com.poseidoncapitalsolutions.poseidon.controller;
 
-import com.poseidoncapitalsolutions.poseidon.dto.RuleNameDTO;
-import com.poseidoncapitalsolutions.poseidon.service.RuleNameService;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.poseidoncapitalsolutions.poseidon.dto.RuleNameDTO;
+import com.poseidoncapitalsolutions.poseidon.service.RuleNameService;
+
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/ruleName")
@@ -49,11 +54,11 @@ public class RuleNameController {
     @PostMapping("/update/{id}")
     public String updateRuleName(@PathVariable("id") Integer id, @Valid RuleNameDTO ruleName,
                                  BindingResult result, Model model) {
+        ruleName.setId(id);
         if (result.hasErrors()) {
-            ruleName.setId(id);
+            model.addAttribute("ruleName", ruleName);
             return "ruleName/update";
         }
-        ruleName.setId(id);
         ruleNameService.save(ruleName);
         return "redirect:/ruleName/list";
     }

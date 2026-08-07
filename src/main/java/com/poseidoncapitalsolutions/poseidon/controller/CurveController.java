@@ -1,12 +1,17 @@
 package com.poseidoncapitalsolutions.poseidon.controller;
 
-import com.poseidoncapitalsolutions.poseidon.dto.CurvePointDTO;
-import com.poseidoncapitalsolutions.poseidon.service.CurvePointService;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.poseidoncapitalsolutions.poseidon.dto.CurvePointDTO;
+import com.poseidoncapitalsolutions.poseidon.service.CurvePointService;
+
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/curvePoint")
@@ -49,11 +54,11 @@ public class CurveController {
     @PostMapping("/update/{id}")
     public String updateCurvePoint(@PathVariable("id") Integer id, @Valid CurvePointDTO curvePoint,
                                    BindingResult result, Model model) {
+        curvePoint.setId(id);
         if (result.hasErrors()) {
-            curvePoint.setId(id);
+            model.addAttribute("curvePoint", curvePoint);
             return "curvePoint/update";
         }
-        curvePoint.setId(id);
         curvePointService.save(curvePoint);
         return "redirect:/curvePoint/list";
     }
